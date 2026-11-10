@@ -38,12 +38,16 @@ by decoding its embedded HQPB fonts rather than relying on OCR.
   line-end hizb marks). 0 unresolved glyphs. Now 6,000 verses share the Hafs skeleton; 6,271 of 305,160
   aligned letters differ. Method, encoding choices, PDF misprints and limits are in `docs/DECODING.md`.
 
+- 2026-11-10 (ground-truth pass): the user confirmed the PDF itself is the Khalaf ground truth. Added `src/audit.py`
+  (every glyph accounted for; nothing dropped but titles, ornaments, page furniture, decorative basmala).
+  Checked every letter and mark glyph by eye on labelled contact sheets; fixed three mislabels (HQPB3 g66 is a
+  final yāʾ, HQPB2 g121/g123 and g87 carry a hamza below). Line-start pause signs now go to the previous line's
+  last word. The sajda small madda (U+06E4) is simply not printed in the PDF. 6,044 verses share the Hafs skeleton.
+
 ## Next
 
-1. Check the text against an authoritative Khalaf ʿan Ḥamzah edition, page by page (needs a source from the user).
-2. Review the ~1k letter differences from Hafs that are outside the common Khalaf patterns, one by one
-   (`python -X utf8 src/compare.py ...` writes them to `tmp/report.txt`).
-3. Check pause-sign placement against the pages.
+1. Optional: make a copy-pasteable PDF by adding an invisible Unicode text layer from `out/khalaf_an_hamzah.tsv`.
+2. Optional: a human proofread of the TSV against the pages (the decoder checks are glyph-level, not word-level).
 
 ## Ideas (not scheduled)
 

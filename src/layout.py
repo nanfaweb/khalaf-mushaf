@@ -19,6 +19,7 @@ ORNAMENTS = {"g167", "g168", "g193", "g194"}  # HQPB2 verse-number brackets
 SKIP_BASE = {("HQPB1", "g3"), ("HQPB2", "g3"), ("HQPB2", "g164")}  # space, kashida bar
 MAX_SIZE = 18.5
 HIZB = ("HQPB4", "g13")
+TOP_OF_PAGE_SIGNS = []  # line-start signs with no line above on the page (for auditing)
 # pause / sajdah signs that stand between words (everything else loose belongs inside a word)
 SIGNS = {("HQPB4", g) for g in ("g5", "g21", "g11", "g22", "g12")} | {
     ("HQPB5", g) for g in ("g135", "g136", "g137")} | {("MSH-Quraan1", "g7"), ("MSH-Quraan1", "g9")}
@@ -115,7 +116,17 @@ def words(page_rows):
             continue
         # pause signs are drawn 4-8pt left of the end of the word they belong to
         right = [w for w in line if w["x0"] >= m["x"] - 1]
-        w = min(right, key=lambda w: w["x0"]) if right else min(line, key=lambda w: _dist(w, m))
+        if right:
+            w = min(right, key=lambda w: w["x0"])
+        else:
+            # a sign at the start of a line belongs to the word that ended the line above
+            above = [w for w in ws if w["y"] < m["y"]]
+            if above:
+                y_prev = max(w["y"] for w in above)
+                w = min((w for w in above if w["y"] == y_prev), key=lambda w: w["x0"])
+            else:
+                w = min(line, key=lambda w: _dist(w, m))
+                TOP_OF_PAGE_SIGNS.append(m)
         w["loose"].append(m)
     ws.sort(key=lambda w: (w["y"], -w["x1"]))
     return ws

@@ -11,8 +11,9 @@ turns each one back into the letter or sign it shows.
 [`out/khalaf_an_hamzah.tsv`](out/khalaf_an_hamzah.tsv): 6,236 verses in 114 surahs, one per row
 (`sura`, `aya`, `pdf_page`, `text`), using King Fahd Complex (KFGQPC) Unicode conventions.
 
-**Status:** machine-decoded and cross-checked against the Hafs text only to find decoder mistakes. It has **not**
-been collated against an authoritative Khalaf ʿan Ḥamzah edition, so it is not a verified muṣḥaf text.
+**Status:** the PDF is taken as the ground truth. Every glyph it draws is accounted for, and every glyph label
+was checked against its shape; the Hafs text was used only to surface decoder mistakes. Not every word has been
+proofread by a person, and misprints in the PDF are reproduced (see `docs/DECODING.md`).
 
 ## How it works
 

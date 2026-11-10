@@ -148,6 +148,8 @@ def decode_cluster(c, unknown):
         marks = mark_string(p, unknown)
         if letter == LB.HAMZA_THEN_ALEF:
             marks = marks.replace("َ", "")
+        if len(letter) == 2 and letter[1] == LB.HAMZA_BELOW:
+            letter, marks = letter[0], marks + LB.HAMZA_BELOW
         if letter == LB.ALEF and marks.startswith("ٔ"):
             letter, marks = "أ", marks[1:]
         out.append([letter, marks])
@@ -210,7 +212,8 @@ def decode_word(w, unknown):
     for m in w["loose"]:
         for font, g in m["marks"]:
             if (font, g) in LB.WHOLE:
-                trailing += LB.WHOLE[(font, g)]
+                if LB.WHOLE[(font, g)] not in trailing:  # a sign overprinted twice counts once
+                    trailing += LB.WHOLE[(font, g)]
             else:
                 unknown.append(f"loose {font}:{g}")
     for m in w.get("lead", []):

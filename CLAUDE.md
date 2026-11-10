@@ -11,5 +11,6 @@
 - `python -X utf8 src/compare.py tmp/glyphs.tsv tmp/ref/hafsData_v18.json tmp/report.txt` lists differences from
   KFGQPC Hafs (download `hafs/data/hafsData_v18.json` from github.com/ibnhazm/KFGQPC into `tmp/ref/`).
 - `python -X utf8 src/peek.py <pdf> tmp/glyphs.tsv tmp/x.png 2:4 [word]` shows a verse's glyphs and renders it.
+- `python -X utf8 src/audit.py tmp/glyphs.tsv` lists every glyph that does not reach the output, with the reason.
 - Scratch output goes in `tmp/` (git-ignored).
 - The text is sacred: never treat OCR or a Ḥafṣ text as ground truth for Khalaf.

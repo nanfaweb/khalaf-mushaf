@@ -2,8 +2,8 @@
 
 Result: `out/khalaf_an_hamzah.tsv`, one verse per row (`sura`, `aya`, `pdf_page`, `text`), 6,236 verses in 114 surahs.
 
-**Status: machine-decoded and cross-checked against Hafs as an alignment aid only. It has not been
-collated against an authoritative Khalaf ʿan Ḥamzah edition, so do not treat it as a verified muṣḥaf text.**
+**Status: decoded from the PDF, which is taken as the ground truth for the Khalaf text. Every glyph is accounted
+for and every glyph label was checked against its shape; not every word was proofread by a person.**
 
 ## Why the original fonts were not needed
 
@@ -58,16 +58,29 @@ Other choices:
 
 ## Checks done
 
-- Verse numbers printed on the pages match the Kufan numbering for all 6,236 verses.
-- Against KFGQPC Hafs (skeleton = letters only): 6,000 verses have an identical skeleton. The other 236 show
-  the kind of differences expected between readings (ن/ي, ت/ي, إِن/أَن, هُزُؤًا, ...).
-- Letter by letter on those 6,000 verses: 305,160 letters line up, 6,271 differ in their marks. More than 5,200 of
-  these fall into well-known Khalaf patterns: shadda on و/ي after tanwīn or nūn (assimilation without
-  ghunna), the imāla dot, عَلَيۡهُمۡ / إِلَيۡهُمۡ, no sukūn on قَد / إِذ before assimilated letters.
-  The rest were reviewed by frequency and look like individual reading differences, but were **not** checked
-  one by one.
+The PDF is the ground truth: the aim is that the text says exactly what the pages show.
+
+**Against the PDF itself**
+
+- Every glyph is accounted for (`python -X utf8 src/audit.py tmp/glyphs.tsv`). Of 646,365 drawn glyphs, the only
+  ones that do not reach the output are: the 114 surah title lines with their مكية/مدنية lines, page furniture
+  in other fonts (page numbers, cover page), title ornaments, and the calligraphic basmala.
+  No mark is left without a word, and no component of any mark is dropped inside a letter.
+- Every letter glyph in use (about 400) and every mark glyph in use (about 280) was checked by eye on labelled
+  contact sheets: the glyph drawn at its true position next to what the decoder outputs for it. This found and
+  fixed three mislabels (a wide final yāʾ read as nūn; yāʾ and wāw with a hamza underneath).
+- Verse numbers printed on the pages run 1..n in every surah, 6,236 in total.
+- Spot checks of whole lines against rendered pages (e.g. 2:4, 19:1-4, 6:124, 53:23, 4:8, 16:28).
+
+**Against KFGQPC Hafs (only to surface decoder mistakes)**
+
+- 6,044 verses have an identical letter skeleton. The other 192 show differences between the two readings
+  (ي/ت, ن/ي, إِن/أَن, هُزُؤًا, فَتَثَبَّتُواْ, ...); the rarer ones were looked at individually.
+- On those 6,044 verses 308,836 letters line up and 6,349 differ in their marks, mostly well-known Khalaf
+  patterns: shadda on و/ي after tanwīn or nūn, the imāla dot, عَلَيۡهُمۡ / إِلَيۡهُمۡ, no sukūn on قَد / إِذ.
 - All 199 ḥizb marks and all 15 sajda signs (U+06E9) fall on the same verses as in Hafs.
-- Spot checks by eye against rendered pages (e.g. 2:4, 19:1-4, 6:124, 53:23, 4:8).
+- Pause signs: 3,769 sit on the same word as in Hafs. The rest are different signs or positions in this
+  edition (checked samples match the page, e.g. 16:28).
 
 ## Misprints in the PDF, reproduced as printed
 
@@ -83,9 +96,11 @@ connector, which decoded as يَٰصَىٰحِبَيِ; it is corrected to يَ�
 
 ## Known limits
 
-- Not collated against a printed or scholarly Khalaf edition.
+- The output can only be as correct as the PDF. Its misprints are reproduced (see above), and it was not
+  compared with any other Khalaf edition.
 - Where the typesetter reused a Hafs glyph that only approximates the Khalaf form, the output follows the glyph.
-- Pause signs are placed by position; a few may sit one word away from where the page shows them.
-- KFGQPC marks 26 places with the small high madda (U+06E4); the decoder produces none. Either the PDF draws
-  these differently for Khalaf or a glyph is being missed. Not yet investigated.
+- Pause signs are placed by position (a sign belongs to the word ending just to its right, or to the last
+  word of the line above when it starts a line). Not every one was checked by eye.
+- KFGQPC puts a small high madda (U+06E4) on the words of each sajda verse. The PDF prints nothing there
+  (checked on the page at 13:15), so the output has none.
 - Hafs is used only to find decoder errors. No letter or mark in the output is taken from the Hafs text.

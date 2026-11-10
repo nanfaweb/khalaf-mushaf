@@ -9,6 +9,7 @@ Output follows KFGQPC Uthmanic-script Unicode conventions.
 ALEF, WASLA_ALEF = "ا", "ٱ"
 DOTLESS_YA = "ى"  # resolved to ى / ي in decode.py
 DAGGER = "ٰ"
+HAMZA_BELOW = "ٕ"  # written after the vowel, as KFGQPC does (يِٕ)
 # hamza standing before the alif of a lam-alif (as in ٱلۡأٓخِرَةِ). The page shows the hamza
 # with a fatha; KFGQPC spells this alif-hamza + madda with no fatha, and we follow that.
 HAMZA_THEN_ALEF = "أٓ"
@@ -40,10 +41,10 @@ BASE = {
     "HQPB2": _ranges([
         (5, 7, L("ف")), (8, 16, L("ق")), (17, 27, L("ك")), (28, 36, L("ل")),
         (37, 52, L("م")), (53, 69, L("ن")), (70, 80, L("ه")), (81, 82, L("ة")),
-        (83, 84, L("و")), (85, 87, L("ؤ")),
+        (83, 84, L("و")), (85, 86, L("ؤ")), (87, 87, L("و" + HAMZA_BELOW)),
         (89, 90, L("ل", "ا")), (91, 92, L("ل", HAMZA_THEN_ALEF)), (93, 94, L("ل", "أ")), (95, 96, L("ل", "إ")), (97, 98, L("ل", "آ")),
         (99, 112, L("ي")), (113, 116, L(DOTLESS_YA)),
-        (119, 137, L("ئ")), (139, 139, L("ـٔ")), (140, 149, L("ئ")),
+        (119, 120, L("ئ")), (121, 123, L("ي" + HAMZA_BELOW)), (125, 137, L("ئ")), (139, 139, L("ـٔ")), (140, 149, L("ئ")),
         (154, 154, L(DAGGER)), (155, 155, L(DAGGER)), (165, 165, L(DAGGER)),
         (156, 156, L("ۥ")), (160, 160, L(DAGGER + "ء")), (158, 158, L("ۦ")), (159, 159, L("ـۧ")),
         (162, 163, L(DAGGER + "ٓ")), (166, 166, L("ن")),
@@ -62,7 +63,7 @@ BASE = {
         (20, 20, L(DOTLESS_YA + DAGGER)), (27, 28, L(DOTLESS_YA + DAGGER)),
         (52, 52, L("ل")), (53, 53, L("م")), (54, 54, L("ه")), (55, 55, L("ل", "ل", "ه")),
         (56, 56, L("ب")), (57, 57, L("ت")), (58, 58, L("ث")), (59, 60, L("ق")),
-        (61, 62, L("س")), (63, 63, L("ش")), (65, 65, L("ل")), (66, 66, L("ن")),
+        (61, 62, L("س")), (63, 63, L("ش")), (65, 65, L("ل")), (66, 66, L(DOTLESS_YA)),
         (75, 75, L("ك")), (77, 77, L("ت")), (80, 80, L("ي")), (94, 95, L("ك")),
         (96, 96, L("ع")), (99, 99, L(DOTLESS_YA)), (102, 102, L("ه")), (105, 105, L("ص")),
         (107, 107, L("س")), (111, 111, L("ف")), (113, 113, L("ع")),
