@@ -61,7 +61,7 @@ Other choices:
 - Verse numbers printed on the pages match the Kufan numbering for all 6,236 verses.
 - Against KFGQPC Hafs (skeleton = letters only): 6,000 verses have an identical skeleton. The other 236 show
   the kind of differences expected between readings (ن/ي, ت/ي, إِن/أَن, هُزُؤًا, ...).
-- Letter by letter on those 6,000 verses: 305,160 letters line up, 6,271 differ in their marks. About 5,300 of
+- Letter by letter on those 6,000 verses: 305,160 letters line up, 6,271 differ in their marks. More than 5,200 of
   these fall into well-known Khalaf patterns: shadda on و/ي after tanwīn or nūn (assimilation without
   ghunna), the imāla dot, عَلَيۡهُمۡ / إِلَيۡهُمۡ, no sukūn on قَد / إِذ before assimilated letters.
   The rest were reviewed by frequency and look like individual reading differences, but were **not** checked
