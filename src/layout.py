@@ -51,7 +51,10 @@ def clusters(page_rows):
             last = out[-1] if out else None
             if last and last["base"] == (font, glyph) and abs(last["x"] - x) < 0.1 and last["y"] == y:
                 last["marks"] += [m for m in pending if m not in last["marks"]]  # fake-bold repeat
-            elif (font, glyph) not in SKIP_BASE:
+            elif (font, glyph) in SKIP_BASE:
+                if pending:  # a mark sitting on a connector bar: keep it as a loose mark
+                    out.append({"base": None, "marks": pending, "x": x, "y": y})
+            else:
                 out.append({"base": (font, glyph), "marks": pending, "x": x, "y": y})
             pending = []
             px = None
@@ -107,7 +110,8 @@ def words(page_rows):
         if all(g in BLANK for g in m["marks"]):
             continue
         if not any(g in SIGNS for g in m["marks"]):
-            min(line, key=lambda w: _dist(w, m)).setdefault("inword", []).append(m)
+            text = [w for w in line if not _is_num(w["cl"][0])] or line
+            min(text, key=lambda w: _dist(w, m)).setdefault("inword", []).append(m)
             continue
         # pause signs are drawn 4-8pt left of the end of the word they belong to
         right = [w for w in line if w["x0"] >= m["x"] - 1]
@@ -122,7 +126,7 @@ def verses(pages, is_header=None):
 
     is_header(line_words, previous_line_was_header) -> True drops that line (surah titles).
     """
-    cur, digits = [], []
+    cur, digits, held = [], [], []
     for pno in sorted(pages):
         kept, line, prev_hdr = [], [], False
         ws = words(pages[pno])
@@ -141,7 +145,11 @@ def verses(pages, is_header=None):
                 digits += [DIGITS[b[1]] for b in reversed(bases) if b[1] in DIGITS]
                 if w["loose"] and cur:
                     cur[-1]["loose"] += w["loose"]
+                held += w.get("lead", [])  # a hizb rosette at a line end: goes to the next word
                 continue
+            if held:
+                w["lead"] = held + w.get("lead", [])
+                held = []
             if digits:
                 yield int("".join(map(str, digits))), cur
                 cur, digits = [], []

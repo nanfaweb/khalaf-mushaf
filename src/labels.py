@@ -73,6 +73,12 @@ BASE = {
 BASE["MSH-Quraan1"] = {"g96": L("ي"), "g97": L("ل"), "g98": L("ا"), "g119": L("ح"), "g170": L("و"),
                        "g178": L("ك"), "g210": L("ء"), "g221": L("ي")}
 
+# whole-word corrections where the typesetter used a look-alike glyph (checked against the page image)
+WORD_FIXES = {
+    # 12:39, 12:41: a connector carrying a small alif was set with the "ya + small alif" glyph
+    "يَٰصَىٰحِبَيِ": "يَٰصَٰحِبَيِ",
+}
+
 # x boundaries (glyph units) splitting a multi-letter base into its letters, right to left
 SPLITS = {3: (570, 300)}  # لله: lam | lam | ha ; two-letter bases split at bbox centre
 
@@ -105,7 +111,7 @@ MSH_KIND = {
     "g17": "dagger", "g43": "dagger", "g78": "dagger", "g87": "dagger",
     "g29": "madda", "g30": "madda", "g33": "meem", "g36": "seen", "g38": "dot",
     "g41": "noon", "g46": "hamza", "g54": "damma", "g58": "stroke", "g60": "stroke",
-    "g73": "stroke", "g70": "dammatan",
+    "g73": "stroke", "g70": "dammatan", "g55": "patch",
 }
 
 # Hamd2 pre-composed lam-alef with marks: (letters, marks on lam)

@@ -109,6 +109,7 @@ def decode_cluster(c, unknown):
     n = len(letters)
     parts = [[] for _ in range(n)]
     wasla = False
+    carry = ""
     for font, g in all_marks:
         if (font, g) in LB.WHOLE:
             trailing += LB.WHOLE[(font, g)]
@@ -121,12 +122,15 @@ def decode_cluster(c, unknown):
             kind = LB.MSH_KIND.get(g)
             if kind is None:
                 unknown.append(f"{font}:{g}")
-                continue
-            parts[letter_index(b, n, comps[0][1])].append((kind, comps[0][1], comps[0][2]))
+            elif kind == "dagger" and n == 1 and comps[0][1] > 350 and (font, g) in c["marks"]:
+                carry += LB.DAGGER  # drawn past the right edge: it follows the previous letter
+            elif kind != "patch":
+                parts[letter_index(b, n, comps[0][1])].append((kind, comps[0][1], comps[0][2]))
             continue
         kinds = [LB.KIND.get(cid) for cid, _, _ in comps]
         # a tanwin (two strokes above) over a lam-alif belongs to the lam
-        pair_on_lam = n == 2 and kinds.count("stroke") == 2 and all(y > 300 for _, _, y in comps)
+        pair_on_lam = (n == 2 and len(comps) == 2 and kinds.count("stroke") == 2
+                       and all(y > 300 for _, _, y in comps) and abs(comps[0][1] - comps[1][1]) < 150)
         for cid, x, y in comps:
             kind = LB.KIND.get(cid)
             if kind is None:
@@ -147,6 +151,8 @@ def decode_cluster(c, unknown):
         if letter == LB.ALEF and marks.startswith("ٔ"):
             letter, marks = "أ", marks[1:]
         out.append([letter, marks])
+    if carry:
+        out[0].append(carry)
     return out, trailing
 
 
@@ -194,6 +200,10 @@ def decode_word(w, unknown):
     attach_inword(w)
     for c in w["cl"]:
         t, tr = decode_cluster(c, unknown)
+        if len(t[0]) == 3:  # marks that belong to the letter before this cluster
+            carry = t[0].pop()
+            if tokens:
+                tokens[-1][1] += carry
         tokens += t
         trailing += tr
     lead = ""
@@ -212,7 +222,8 @@ def decode_word(w, unknown):
             t[1] = t[1].replace(IMALA, "")
             tokens[i - 1][1] += IMALA
     resolve_ya(tokens)
-    return lead + "".join(l + m for l, m in tokens) + trailing
+    body = "".join(l + m for l, m in tokens)
+    return lead + LB.WORD_FIXES.get(body, body) + trailing
 
 
 def _skeleton(t):

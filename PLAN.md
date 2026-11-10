@@ -34,15 +34,16 @@ by decoding its embedded HQPB fonts rather than relying on OCR.
   hamza before the alif of lam-alif is written أٓ (the page shows hamza + fatha).
 - Misprints in the PDF itself, reproduced as printed: 4:8 lacks وَ before ٱلۡيَتَٰمَىٰ; the verse-23 marker in
   surah 53 comes after أَمۡ; a stray alif-with-dot glyph (Hamd2 g3, 4 places, e.g. 5:3) is ignored.
-- Known loose ends: 6:124 رسالاته (one unresolved glyph, small alifs out of order); 12:39 يَٰصَىٰحِبَيِ has a
-  spurious ى; a few pause signs may sit one word off; sajdah overlines (U+06E4) are not in the PDF;
-  the PDF's colour coding of Khalaf-specific spots is not exported.
+- 2026-11-10 (later): loose ends fixed (6:124, 12:39/41, loose imala dots and small alifs, squeezed 12pt words,
+  line-end hizb marks). 0 unresolved glyphs. Now 6,000 verses share the Hafs skeleton; 6,271 of 305,160
+  aligned letters differ. Method, encoding choices, PDF misprints and limits are in `docs/DECODING.md`.
 
 ## Next
 
-1. Write `docs/DECODING.md` (method, mapping tables, the misprints and loose ends above).
-2. Fix the loose ends listed above; review the remaining ~1k non-pattern differences in `tmp/report.txt`.
-3. Check the text against an authoritative Khalaf ʿan Ḥamzah edition, page by page.
+1. Check the text against an authoritative Khalaf ʿan Ḥamzah edition, page by page (needs a source from the user).
+2. Review the ~1k letter differences from Hafs that are outside the common Khalaf patterns, one by one
+   (`python -X utf8 src/compare.py ...` writes them to `tmp/report.txt`).
+3. Check pause-sign placement against the pages.
 
 ## Ideas (not scheduled)
 
