@@ -66,7 +66,7 @@ Other choices:
   ghunna), the imāla dot, عَلَيۡهُمۡ / إِلَيۡهُمۡ, no sukūn on قَد / إِذ before assimilated letters.
   The rest were reviewed by frequency and look like individual reading differences, but were **not** checked
   one by one.
-- All 199 ḥizb marks and all 15 sajda marks fall on the same verses as in Hafs.
+- All 199 ḥizb marks and all 15 sajda signs (U+06E9) fall on the same verses as in Hafs.
 - Spot checks by eye against rendered pages (e.g. 2:4, 19:1-4, 6:124, 53:23, 4:8).
 
 ## Misprints in the PDF, reproduced as printed
@@ -86,5 +86,6 @@ connector, which decoded as يَٰصَىٰحِبَيِ; it is corrected to يَ�
 - Not collated against a printed or scholarly Khalaf edition.
 - Where the typesetter reused a Hafs glyph that only approximates the Khalaf form, the output follows the glyph.
 - Pause signs are placed by position; a few may sit one word away from where the page shows them.
-- The sajda overline that KFGQPC encodes as U+06E4 is not in the PDF.
+- KFGQPC marks 26 places with the small high madda (U+06E4); the decoder produces none. Either the PDF draws
+  these differently for Khalaf or a glyph is being missed. Not yet investigated.
 - Hafs is used only to find decoder errors. No letter or mark in the output is taken from the Hafs text.
