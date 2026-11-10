@@ -24,18 +24,26 @@ by decoding its embedded HQPB fonts rather than relying on OCR.
 - No Unicode Khalaf text exists in the KFGQPC repos (ibnhazm/KFGQPC has hafs, warsh, qaloon, shouba, doori,
   soosi, bazzi, qumbul only).
 
+- 2026-11-10: **decoder works.** `src/decode.py` writes `out/khalaf_an_hamzah.tsv`: 6,236 verses in 114 surahs
+  (verse numbers read from the page match the Kufan count everywhere). Labels came from the glyph atlases
+  (fonts are in alphabetical order, one glyph per letter shape) plus mark shapes named by eye; no original fonts needed.
+  Check against KFGQPC Hafs (`src/compare.py`, alignment aid only): 5,998 verses have the same letter skeleton,
+  ~305k letters line up and ~6.3k differ, of which ~5.2k are known Khalaf patterns (idgham shadda on و/ي,
+  imala dot, عليهُم, no sukun on قد/إذ). Not yet checked against a real Khalaf edition.
+- Encoding choices: KFGQPC Uthmanic conventions; imala dot = U+065C, taqlil ring = U+06EA, ishmam = U+06EC;
+  hamza before the alif of lam-alif is written أٓ (the page shows hamza + fatha).
+- Misprints in the PDF itself, reproduced as printed: 4:8 lacks وَ before ٱلۡيَتَٰمَىٰ; the verse-23 marker in
+  surah 53 comes after أَمۡ; a stray alif-with-dot glyph (Hamd2 g3, 4 places, e.g. 5:3) is ignored.
+- Known loose ends: 6:124 رسالاته (one unresolved glyph, small alifs out of order); 12:39 يَٰصَىٰحِبَيِ has a
+  spurious ى; a few pause signs may sit one word off; sajdah overlines (U+06E4) are not in the PDF;
+  the PDF's colour coding of Khalaf-specific spots is not exported.
+
 ## Next
 
-1. Decide the labelling route (see below), then build the glyph → Unicode tables.
-2. Write the decoder: order glyphs per line (right-to-left), attach marks to bases, emit Unicode.
-3. Check output against an authoritative Khalaf ʿan Ḥamzah text, page by page.
-
-Labelling routes:
-- A. Original HQPB fonts (if the user can find them): cmap gives codes directly, then a legacy → Unicode table.
-- B. Without them: align base glyphs (HQPB1/2/3) against the KFGQPC Hafs/Shuʿbah consonant skeleton,
-  which Khalaf almost always shares, to label base letters automatically; label the ~270 mark glyphs
-  (HQPB4/5) by hand from the atlases. Hafs is only an alignment scaffold here, never the answer.
+1. Write `docs/DECODING.md` (method, mapping tables, the misprints and loose ends above).
+2. Fix the loose ends listed above; review the remaining ~1k non-pattern differences in `tmp/report.txt`.
+3. Check the text against an authoritative Khalaf ʿan Ḥamzah edition, page by page.
 
 ## Ideas (not scheduled)
 
-- Rebuild the PDF with a proper ToUnicode text layer once the decoder is trusted.
+- Export the colour coding; rebuild the PDF with a proper ToUnicode text layer.
