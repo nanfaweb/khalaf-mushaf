@@ -15,14 +15,26 @@ by decoding its embedded HQPB fonts rather than relying on OCR.
   This fits PScript5/Distiller converting TrueType fonts, where `gNNN` is the glyph's index in the
   original font. If confirmed, the original font's cmap gives each glyph's character code directly.
 
+- PDF is in the project root (git-ignored). `src/extract_glyphs.py` dumps all 646,365 drawn glyphs
+  (page, order, font, glyph name, x, y, size) to a TSV in ~6 s. That's more than the old inventory
+  (627,706) because the old `get_text('dict')` pass dropped glyphs stacked at the same position.
+  Mark glyphs (HQPB4/5) are drawn at the same origin as their base glyph (HQPB1/2).
+- Original fonts: duas.org/fonts/ is now 404 with no Wayback copy; islamicstudies.info blocks automated access.
+  Not found elsewhere yet.
+- No Unicode Khalaf text exists in the KFGQPC repos (ibnhazm/KFGQPC has hafs, warsh, qaloon, shouba, doori,
+  soosi, bazzi, qumbul only).
+
 ## Next
 
-1. Get the PDF into this folder.
-2. Get the original HQPB1–5, HQPB7 font files (listed at https://www.duas.org/fonts/) and confirm `gNNN` = glyph index
-   by comparing outlines between subset and original.
-3. Build glyph → character-code → Unicode tables per font (legacy codes likely need a hand-made table).
-4. Write the decoder: walk each page's text operators, switch fonts, order glyphs and attach marks.
-5. Check output against an authoritative Khalaf ʿan Ḥamzah text, page by page.
+1. Decide the labelling route (see below), then build the glyph → Unicode tables.
+2. Write the decoder: order glyphs per line (right-to-left), attach marks to bases, emit Unicode.
+3. Check output against an authoritative Khalaf ʿan Ḥamzah text, page by page.
+
+Labelling routes:
+- A. Original HQPB fonts (if the user can find them): cmap gives codes directly, then a legacy → Unicode table.
+- B. Without them: align base glyphs (HQPB1/2/3) against the KFGQPC Hafs/Shuʿbah consonant skeleton,
+  which Khalaf almost always shares, to label base letters automatically; label the ~270 mark glyphs
+  (HQPB4/5) by hand from the atlases. Hafs is only an alignment scaffold here, never the answer.
 
 ## Ideas (not scheduled)
 
