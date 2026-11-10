@@ -1,0 +1,21 @@
+Title:           المصحف الشريف برواية خلف عن حمزة
+Subject:         القرآن الكريم
+Keywords:        عن موقع الشبكة الإسلامية www.islamweb.net
+Creator:         PScript5.dll Version 5.2
+Producer:        Acrobat Distiller 8.0.0 (Windows)
+CreationDate:    Fri Sep 18 04:42:30 2009 UTC
+ModDate:         Fri Sep 18 07:17:47 2009 UTC
+Custom Metadata: no
+Metadata Stream: yes
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           604
+Encrypted:       no
+Page size:       595.22 x 842 pts (A4)
+Page rot:        0
+File size:       2723425 bytes
+Optimized:       no
+PDF version:     1.4

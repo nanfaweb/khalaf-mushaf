@@ -1,0 +1,13 @@
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+EDAKKN+DecoType-ProfessionalNaskhSupplement4Kashidahs Type 1C           Custom           yes yes no    1902  0
+EDAKLN+TimesNewRomanPSMT             Type 1C           WinAnsi          yes yes no    1923  0
+EDALAN+HQPB4                         Type 1C           Custom           yes yes no    1906  0
+EDALBN+HQPB2                         Type 1C           Custom           yes yes no    1907  0
+EDALCO+HQPB5                         Type 1C           Custom           yes yes no    1908  0
+EDALDO+HQPB1                         Type 1C           Custom           yes yes no    1909  0
+EDALEP+HQPB3                         Type 1C           Custom           yes yes no    1926  0
+EDAMLH+DecoType-ProfessionalNaskhSupplement1Variants Type 1C           Custom           yes yes no    1810  0
+EDAMLI+Hamd2                         Type 1C           Custom           yes yes no    1813  0
+EDAOGP+MSH-Quraan1                   Type 1C           Custom           yes yes no    1818  0
+EDCJEL+HQPB7                         Type 1C           Custom           yes yes no    1823  0
